@@ -19,3 +19,4 @@ class Review(core_models.TimeStampedModel):
     def __str__(self):
         return '"' + self.review + '" (' + self.user.username + ") - "\
             + self.room.name + "/" + self.room.host.username
+    # test
