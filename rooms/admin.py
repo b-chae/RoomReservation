@@ -54,7 +54,8 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     list_display = ("name", "country", "city", "price", "guests",
-                    "beds", "baths", "check_in", "check_out", "instant_book", "count_amenities", "count_photos", "total_rating")
+                    "beds", "baths", "check_in", "check_out", "instant_book",
+                    "count_amenities", "count_photos", "total_rating")
     list_filter = ("instant_book", "host__superhost", "room_type",
                    "amenities", "facilities", "house_rules", "country", "city")
     search_fields = ("=city", "=host__username", "name")
