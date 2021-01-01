@@ -15,15 +15,23 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
+class PhotoInline(admin.StackedInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
 
+    inlines = (PhotoInline, )
+
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country",
+                        "city", "address", "price")},
         ),
         (
             "Times",
@@ -52,6 +60,7 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = ("=city", "=host__username", "name")
     filter_horizontal = ("amenities", "facilities", "house_rules")
     ordering = ("price", "name")
+    raw_id_fields = ("host", )
 
     # object : current row
     def count_amenities(self, obj):

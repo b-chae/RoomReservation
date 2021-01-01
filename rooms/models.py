@@ -88,6 +88,10 @@ class Room(core_models.TimeStampedModel):
     house_rules = models.ManyToManyField(
         HouseRule, related_name="rooms", blank=True)
 
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save(*args, **kwargs)  # Call the real save() method
+
     def __str__(self):
         return self.name
 
