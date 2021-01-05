@@ -1,5 +1,4 @@
-from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .import models
 
 # Limiting Querysets
@@ -19,3 +18,11 @@ class HomeView(ListView):
     paginate_orphans = 5
     ordering = "created"
     page_kwarg = "page"
+
+
+class RoomDetail(DetailView):
+
+    """ Room Detail Definition """
+
+    model = models.Room
+    pk_url_kwarg = "pk"
