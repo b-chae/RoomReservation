@@ -53,7 +53,7 @@ class RoomAdmin(admin.ModelAdmin):
         ),
     )
 
-    list_display = ("name", "country", "city", "price", "guests",
+    list_display = ("name", "country", "city", "price", "room_type", "guests",
                     "beds", "baths", "check_in", "check_out", "instant_book",
                     "count_amenities", "count_photos", "total_rating")
     list_filter = ("instant_book", "host__superhost", "room_type",
