@@ -44,4 +44,9 @@
     </h4>
 </div>
 
+
+{% if room.host == user %}
+    <a href="{% url 'rooms:edit' room.pk%}" class="btn-link block">Edit Room</a>
+{% endif %}
+
 {% endblock content %}
