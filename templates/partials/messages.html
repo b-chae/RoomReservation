@@ -1,0 +1,7 @@
+{% if messages %}
+<div class="absolute top-5 mx-auto left-0 right-0 flex justify-center">
+    {% for message in messages %}
+    <div class="mymessage z-10 font-medium rounded-full text-white py-4 px-6 w-64 text-center {% if message.tags %}{{ message.tags }}{% endif %}">{{message}}</div>
+    {% endfor %}
+</div>
+{% endif %}
