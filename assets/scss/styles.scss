@@ -16,6 +16,10 @@
   @apply text-center rounded-sm py-5 font-medium text-lg w-full;
 }
 
+.btn_link {
+  @apply text-center rounded-lg py-3 font-medium text-lg w-full text-white bg-red-400;
+}
+
 form {
   input {
     @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-red-300 mb-3;
