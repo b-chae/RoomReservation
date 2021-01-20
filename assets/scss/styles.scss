@@ -26,6 +26,12 @@ form {
   }
 }
 
+input,
+textarea,
+select {
+  @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-red-300 mb-3;
+}
+
 .has_error {
   input {
     @apply bg-red-300;
@@ -65,6 +71,15 @@ form {
   &.warning {
     @apply bg-yellow-400;
   }
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+select {
+  height: 60px;
 }
 
 @tailwind utilities;
