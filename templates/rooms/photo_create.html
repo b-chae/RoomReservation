@@ -2,7 +2,7 @@
 
 
 {% block page_title %}
-    Update Room
+    Upload Photo
 {% endblock page_title %}
 
 
@@ -12,11 +12,7 @@
 
 {% block content %}
     <div class="container lg:w-5/12 md:w-2/3 xl:w-1/2 mx-auto my-10 p-5 flex flex-col items-center border">
-        {% include 'mixins/rooms/room_form.html' with form=form cta="Update room" %}
-
-        <div class="mt-5">
-            <a href="{% url 'rooms:photos' room.pk %}" class="text-indigo-400 font-medium">Edit Photos</a>
-        </div>
+        {% include 'mixins/rooms/room_form.html' with form=form cta="Upload photo" %}
     </div>
 {% endblock content %}
     
