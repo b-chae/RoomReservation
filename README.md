@@ -1,3 +1,7 @@
-## Airbnb Clone
+## 숙소 예약 웹사이트
 
-Cloning Airbnb with Python, Django
+with Python, Django
+- home
+- room detail
+- user profile
+- login/social login/sign up
