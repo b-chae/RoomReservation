@@ -1,4 +1,5 @@
 import uuid
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -17,17 +18,17 @@ class User(AbstractUser):
     GENDER_OTHER = "other"
 
     GENDER_CHOICES = (
-        (GENDER_MALE, "Male"),
-        (GENDER_FEMALE, "Female"),
-        (GENDER_OTHER, "Other"),
+        (GENDER_MALE, _("Male")),
+        (GENDER_FEMALE, _("Female")),
+        (GENDER_OTHER, _("Other")),
     )
 
     LANGUAGE_ENGLISH = "en"
     LANGUAGE_KOREAN = "ko"
 
     LANGUAGE_CHOICES = (
-        (LANGUAGE_ENGLISH, "English"),
-        (LANGUAGE_KOREAN, "Korean"),
+        (LANGUAGE_ENGLISH, _("English")),
+        (LANGUAGE_KOREAN, _("Korean")),
     )
 
     CURRENCY_USD = "usd"
@@ -40,9 +41,9 @@ class User(AbstractUser):
     LOGIN_KAKAO = "kakao"
 
     LOGIN_CHOICES = (
-        (LOGIN_EMAIL, "Email"),
-        (LOGIN_GITHUB, "Github"),
-        (LOGIN_KAKAO, "Kakao")
+        (LOGIN_EMAIL, _("Email")),
+        (LOGIN_GITHUB, _("Github")),
+        (LOGIN_KAKAO, _("Kakao")),
     )
 
     avatar = models.ImageField(upload_to="avatars", blank=True)
@@ -71,7 +72,7 @@ class User(AbstractUser):
             html_message = render_to_string(
                 "emails/verify_email.html", {'secret': secret})
             send_mail(
-                "Verify Airbnb Account",
+                _("Verify Airbnb Account"),
                 strip_tags(html_message),
                 settings.EMAIL_FROM,
                 [self.email, ],
