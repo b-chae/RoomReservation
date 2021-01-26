@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+    Reservation {{reservation.check_in}}
+{% endblock page_title %}
+
+
+{% block search-bar %}  
+{% endblock search-bar %}
+
+
+{% block content %}
+
+<div class='w-full m-10 flex flex-col justify-center text-center'>
+    <div class="font-medium text-lg mb-10">
+        My Reservation Lists
+    </div>
+        
+    {% for r in reservations %}
+        <div class="mb-3 w-full border-b">
+            <a class="{% if r.guest.pk == user.pk %} text-gray-900 {% else %} text-pink-500 {% endif %} hover:underline hover:text-gray-400" href='{% url "reservations:detail" r.pk %}'> ({{r.status}}) {{r.room.name}} / {{r.check_in}} </a>
+        </div>
+    {% endfor %}
+</div>
+    
+{% endblock content%}

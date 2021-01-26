@@ -20,6 +20,7 @@
 
         {% if user == user_obj %}
         <a href="{% url "users:update" %}" class="btn_link mt-5">Edit Profile</a>
+        <a href="{% url "reservations:lists" %}" class="btn_link mt-5">See My Reservations</a>
         {% endif %}
     </div>
 

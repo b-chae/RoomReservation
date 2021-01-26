@@ -3,6 +3,7 @@ from django.http import Http404
 from django.views.generic import View
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
+from django.db.models import Q
 from rooms import models as room_models
 from reviews import forms as review_forms
 from . import models
@@ -74,3 +75,10 @@ def edit_reservation(request, pk, verb):
         request,
         "reservations/detail.html",
         {"reservation": reservation})
+
+
+def reservations_list(request):
+    reservations = models.Reservation.objects.filter(
+        Q(guest=request.user) | Q(room__host=request.user))
+
+    return render(request, "reservations/lists.html", {"reservations": reservations})
