@@ -13,6 +13,9 @@
             <li class="nav_link"><a href='{% url "rooms:create" %}'>Create Room</a></li>
             {% endif %}
             <li class="nav_link"><a href='{% url "users:profile" user.pk%}'>Profile</a></li>
+            {% if not request.session.is_hosting and user.lists.rooms.count > 0 %}
+                <li class="nav_link"><a href='{% url "lists:see-favs" %}'>Favs ({{user.lists.rooms.count}})</a></li>
+            {% endif %}
             <li class="nav_link"><a href='{% url "users:logout" %}'>Log out</a></li>
         {% else %}
         <li class="nav_link"><a href='{% url "users:login" %}'>Log in</a></li>

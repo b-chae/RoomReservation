@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Your Favorites
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="container lg:w-3/4 md:w-10/12 sm:w-full mx-auto my-10 flex flex-col items-center">
+        <div class="mb-12 text-2xl font-medium">
+            Your Favorites
+        </div>
+        <div class="mb-8"> You have {{user.lists.rooms.count}} rooms in your list </div>
+        <div class="flex flex-wrap -mx-40 mb-10 w-full">
+            {% for room in user.lists.rooms.all %}
+                {% include 'mixins/rooms/room_card.html' with room=room %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
+    
