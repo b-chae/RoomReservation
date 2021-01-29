@@ -1,7 +1,11 @@
+import sys
+from io import BytesIO
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django_countries.fields import CountryField
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
 from core import models as core_models
 from users import models as user_models
 from cal import Calendar
@@ -50,12 +54,32 @@ class Photo(core_models.TimeStampedModel):
     """Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField(upload_to="room_photos")
+    file = models.ImageField(upload_to="room_photos/")
     room = models.ForeignKey(
         "Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
+
+    def save(self):
+        image = Image.open(self.file)
+
+        width = 100
+        src_width, src_height = image.size
+        src_ratio = float(src_height) / float(src_width)
+        dst_height = round(src_ratio * width)
+
+        output = BytesIO()
+
+        im = image.resize((width, dst_height))
+
+        im.save(output, format='PNG', quality=90)
+        output.seek(0)
+
+        self.file = InMemoryUploadedFile(output, 'ImageField', "%s.png" % self.file.name.split('.')[0], 'image/png',
+                                         sys.getsizeof(output), None)
+
+        super(Photo, self).save()
 
 
 class Room(core_models.TimeStampedModel):
@@ -109,6 +133,65 @@ class Room(core_models.TimeStampedModel):
         all_ratings = 0
         for review in all_reviews:
             all_ratings += review.rating_average()
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_accuracy(self):
+        all_reviews = self.reviews.all()
+        if len(all_reviews) == 0:
+            return 0
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.accuracy
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_communication(self):
+        all_reviews = self.reviews.all()
+        if len(all_reviews) == 0:
+            return 0
+
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.communication
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_cleanliness(self):
+        all_reviews = self.reviews.all()
+        if len(all_reviews) == 0:
+            return 0
+
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.cleanliness
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_location(self):
+        all_reviews = self.reviews.all()
+        if len(all_reviews) == 0:
+            return 0
+
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.location
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_check_in(self):
+        all_reviews = self.reviews.all()
+        if len(all_reviews) == 0:
+            return 0
+
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.check_in
+        return round(all_ratings/len(all_reviews), 2)
+
+    def total_value(self):
+        all_reviews = self.reviews.all()
+        if(len(all_reviews) == 0):
+            return 0
+
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.value
         return round(all_ratings/len(all_reviews), 2)
 
     def first_photo(self):

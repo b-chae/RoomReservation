@@ -1,21 +1,5 @@
-{% load i18n %}
-<footer class="container mx-auto text-center py-10 border-t font-medium text-gray-500">
+<footer class="container mx-auto text-center py-10 border-t font-medium text-gray-400">
     <div class="flex flex-col">
-    <span>{% trans "please don't copy this" %}</span>
-    &copy; ByeoriBnb, Inc. {% trans "All rights reserved" %}. Please cherish me :)
-    <span>{% get_current_language as LANGUAGE_CODE %}
-        {{LANGUAGE_CODE}}</span>
-    </div>
-
-    <div class="flex mt-10">
-        <select class="w-1/5 h-8" id="js-lang">
-            {% get_current_language as LANGUAGE_CODE %}
-            {{LANGUAGE_CODE}}
-            <option value="en"
-            {% if LANGUAGE_CODE == 'en' %} selected 
-            {% endif %}>English</option>
-            <option value="es"
-            {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>Spanish</option>
-        </select>
+    &copy; BSaFe, Inc. <br>All rights reserved. <br><br><br> email : cbr5964@sogang.ac.kr <br> homepage : https://github.com/b-chae
     </div>
 </footer>

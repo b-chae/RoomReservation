@@ -6,7 +6,7 @@
 }
 
 .nav_link {
-  @apply ml-8 border-b-2 border-white hover:border-blue-400 h-full flex items-center;
+  @apply ml-8 border-b-2 border-white hover:border-green-200 h-full flex items-center;
   a {
     @apply py-10 px-5;
   }
@@ -17,24 +17,24 @@
 }
 
 .btn_link {
-  @apply text-center rounded-lg py-3 font-medium text-lg w-full text-white bg-red-400;
+  @apply text-center rounded-lg py-3 font-medium text-lg w-full text-white bg-green-600;
 }
 
 form {
   input {
-    @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-red-300 mb-3;
+    @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-green-400 mb-3;
   }
 }
 
 input,
 textarea,
 select {
-  @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-red-300 mb-3;
+  @apply rounded-sm py-4 font-medium text-lg w-full text-left border border-gray-500 px-5 focus:outline-none focus:border-green-400 mb-3;
 }
 
 .has_error {
   input {
-    @apply bg-red-300;
+    @apply bg-green-300;
   }
 }
 

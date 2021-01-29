@@ -14,6 +14,10 @@ class CreateError(Exception):
 
 
 def create(request, room, year, month, day):
+
+    if not request.user.is_authenticated:
+        return redirect(reverse("users:login"))
+
     try:
         date_obj = datetime.datetime(year=year, month=month, day=day)
         room = room_models.Room.objects.get(pk=room)

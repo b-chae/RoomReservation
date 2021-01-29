@@ -75,14 +75,14 @@
             {% endfor %}
             </ul>
         </div>
-        <div>
-            <h4 class="font-medium text-2lg mb-5">
+        <div class="flex flex-col">
+            <h4 class="font-bold text-2xl mb-5 mt-5">
                 Reviews
             </h4>
             
             <div class="flex items-center">
                 <div>
-                    <i class="fas fa-star text-red-400"></i>
+                    <i class="fas fa-star text-green-600"></i>
                     <span class="font-bold text-xl mr-5">{{room.total_rating}}</span>
                 </div>
                 <div class="h-5 w-px bg-gray-400 mr-5"></div>
@@ -90,13 +90,102 @@
                 <span>review{{room.reviews.count | pluralize}}</span>
             </div>
 
+            
+            {% if room.reviews.count > 0 %}
+            
+            <div class="flex items-center flex-col w-full">
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Accuracy</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_accuracy}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_accuracy as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class='w-full h-px bg-gray-400'></div>
+                
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Communication</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_communication}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_communication as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class='w-full h-px bg-gray-400'></div>
+                
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Cleanliness</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_cleanliness}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_cleanliness as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class='w-full h-px bg-gray-400'></div>
+                
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Location</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_location}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_location as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class='w-full h-px bg-gray-400'></div>
+                
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Check In</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_check_in}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_check_in as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class='w-full h-px bg-gray-400'></div>
+                
+                <div class="w-full m-3 flex felx-row">
+                    <span class="font-bold text-gray-800 w-2/3">Value</span>
+                    <span class="font-bold ml-3 mr-3 w-1/3">{{room.total_value}}</span>
+                    <div class="w-full">
+                        {% with ''|center:room.total_value as range %}
+                        {% for _ in range %}
+                        <i class="fas fa-star text-green-600"></i>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+            </div>
+            {% endif %}
+            
             <div class="mt-10">
                 {% for review in room.reviews.all %}
-                    <div class="border-section">
+                <div class="border-section">
                     <div class="flex mb-3">
-                        <div>
+                        <a href="{% url 'users:profile' review.user.pk %}">
                             {% include 'mixins/user_avatar.html' with user=review.user h_and_w='w-12 h-12' text='text-2xl'%}
-                        </div>
+                        </a>
                         <div class="flex flex-col ml-5">
                         <span class="font-medium">{{review.user.first_name}}</span>
                         <span class="text-sm text-gray-500">
@@ -114,14 +203,16 @@
     </div>
     <div class="w-1/3">
         {% if room.host == user %}
-    <a href="{% url 'rooms:edit' room.pk%}" class="btn bg-red-400 text-white block">Edit Room</a>
+    <a href="{% url 'rooms:edit' room.pk%}" class="btn_link block">Edit Room</a>
         {% else %}
             {% if not request.session.is_hosting %}
-            {% on_favs room as on_favs_boolean %}
-            {% if on_favs_boolean %}
-                <a href="{% url 'lists:toggle-room' room.pk %}" class="btn bg-green-400 text-white rounded-lg block mb-5">Save to Favorites</a>
-            {% else %}
-                <a href="{% url 'lists:toggle-room' room.pk %}" class="btn bg-red-400 text-white rounded-lg block mb-5">Remove from Favorites</a>
+            {% if user.is_authenticated %}
+                {% on_favs room as on_favs_boolean %}
+                {% if on_favs_boolean %}
+                    <a href="{% url 'lists:toggle-room' room.pk %}" class="btn bg-green-400 text-white rounded-lg block mb-5">Save to Favorites</a>
+                {% else %}
+                    <a href="{% url 'lists:toggle-room' room.pk %}" class="btn bg-red-400 text-white rounded-lg block mb-5">Remove from Favorites</a>
+                {% endif %}
             {% endif %}
                 {% for calendar in room.get_calendars %}
                 <div class="mb-20">

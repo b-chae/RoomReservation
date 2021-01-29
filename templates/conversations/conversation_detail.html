@@ -43,7 +43,7 @@
             <form class="mt-5" method="POST" action="{% url 'conversations:detail' conversation.pk %}" >
                 {% csrf_token %}
                 {{form.message}}
-                <button class="btn rounded-lg block w-full bg-red-400 text-white">Send Comment</button>
+                <button class="btn_link rounded-lg block w-full">Send Comment</button>
             </form>
         </div>
 </div>

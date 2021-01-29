@@ -79,7 +79,7 @@ def complete_verification(request, key):
 
 def github_login(request):
     client_id = os.environ.get("GH_ID")
-    redirect_url = "http://127.0.0.1:8000/users/login/github/callback"
+    redirect_url = "http://airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com/users/login/github/callback"
     return redirect(
         "https://github.com/login/oauth/authorize"
         + f"?client_id={client_id}"
@@ -160,7 +160,7 @@ def github_callback(request):
 
 def kakao_login(request):
     client_id = os.environ.get("KAKAO_ID")
-    redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
+    redirect_uri = "http://airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com/users/login/kakao/callback"
     return redirect(
         "https://kauth.kakao.com/oauth/authorize"
         + f"?client_id={client_id}"
@@ -177,7 +177,7 @@ def kakao_callback(request):
     try:
         code = request.GET.get("code")
         client_id = os.environ.get("KAKAO_ID")
-        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
+        redirect_uri = "http://airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com/users/login/kakao/callback"
         token_request = requests.get(
             "https://kauth.kakao.com/oauth/token?grant_type=authorization_code"
             + f"&client_id={client_id}"
@@ -198,9 +198,13 @@ def kakao_callback(request):
             },
         )
         profile_json = profile_request.json()
-        email = profile_json.get("kakao_account").get("email", None)
-        if email is None:
-            raise KakaoException("Please also give me your email")
+
+        try:
+            email = profile_json.get("kakao_account").get("email", None)
+            if email is None:
+                raise KakaoException("Please also give me your email")
+        except:
+            raise KakaoException("Not allowed. Use email to login")
 
         nickname = profile_json.get("properties").get("nickname")
         profile_image = profile_json.get("properties").get("profile_image")

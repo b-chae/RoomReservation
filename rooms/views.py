@@ -23,7 +23,7 @@ class HomeView(ListView):
     model = models.Room
     paginate_by = 12
     paginate_orphans = 5
-    ordering = "created"
+    ordering = "-created"
     page_kwarg = "page"
 
 
@@ -38,7 +38,7 @@ class RoomDetail(DetailView):
 class SearchView(View):
 
     def get(self, request):
-        country = request.GET.get("country")
+        country = request.GET.get("country", None)
         if country:
             form = forms.SearchForm(request.GET)
             if form.is_valid():
@@ -95,7 +95,7 @@ class SearchView(View):
                     filter_args["facilities"] = facility
 
                 qs = models.Room.objects.filter(
-                    **filter_args).order_by("created")
+                    **filter_args).order_by("-created")
                 paginator = Paginator(qs, 10, orphans=5)
                 page = int(request.GET.get("page", 1))
                 rooms = paginator.get_page(page)
@@ -115,8 +115,13 @@ class SearchView(View):
                               )
         else:
             form = forms.SearchForm()
+            qs = models.Room.objects.all().order_by("-created")
+            paginator = Paginator(qs, 10, orphans=5)
+            page = int(request.GET.get("page", 1))
+            rooms = paginator.get_page(page)
 
-        return render(request, "rooms/search.html", {"form": form})
+        return render(request, "rooms/search.html", {"form": form, "rooms": rooms,
+                                                     "page_obj": paginator.page(page), })
 
 
 class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
@@ -194,10 +199,10 @@ class EditPhotoView(user_mixins.LoggedInOnlyView,
         return reverse("rooms:photos", kwargs={"pk": room_pk})
 
     def get_object(self, queryset=None):
-        room = super().get_object(queryset=queryset)
-        if room.host.pk != self.request.user.pk:
+        photo = super().get_object(queryset=queryset)
+        if photo.room.host.pk != self.request.user.pk:
             raise Http404()
-        return room
+        return photo
 
 
 class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):

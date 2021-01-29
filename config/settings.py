@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +22,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pagvn*vzpkiw6d+d%^g6p7g=9e+i2q77)5&9vsq0$og2zz7cbz'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET", "wjszv3nVHS3rypCWf3T5yYQU4cmoUmHy")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com',
+    '127.0.0.1',
+]
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -49,6 +56,7 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     "django_countries",
     "django_seed",
+    "storages",
 ]
 
 # Application definition
@@ -87,17 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -134,13 +131,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, '')
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 
 AUTH_USER_MODEL = 'users.User'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
 
 MEDIA_URL = "/media/"
 
@@ -157,3 +155,48 @@ LOGIN_URL = "/users/login"
 
 # Locale
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
+if not DEBUG:
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_URL"),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )
+
+# Database
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+
+    DEFAULT_FILE_STORAGE = 'config.custom_storages.UploadStorage'
+    STATICFILES_STORAGE = 'config.custom_storages.StaticStorage'
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = "my-airbnb-clone-static-bucket"
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+
+    MEDIA_URL = '/uploads/'
+
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com'
+
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+    DATABASES = {
+        'default': {
+            'ENGINE': "django.db.backends.postgresql",
+            'HOST': os.environ.get("RDS_HOST"),
+            'NAME': os.environ.get("RDS_NAME"),
+            'USER': os.environ.get("RDS_USER"),
+            'PASSWORD': os.environ.get("RDS_PASSWORD"),
+            'PORT': "5432",
+        }
+    }

@@ -140,8 +140,12 @@ cython_debug/
 # mac
 .DS_Store
 
-uploads/
+uploads/avatars/
 
 .prettierignore
 node_modules/
-static/img/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,4 +1,6 @@
 import uuid
+import sys
+from io import BytesIO
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import models
@@ -7,6 +9,8 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
 
 
 class User(AbstractUser):
@@ -46,7 +50,7 @@ class User(AbstractUser):
         (LOGIN_KAKAO, _("Kakao")),
     )
 
-    avatar = models.ImageField(upload_to="avatars", blank=True)
+    avatar = models.ImageField(upload_to="avatars/", blank=True)
     gender = models.CharField(choices=GENDER_CHOICES,
                               max_length=10, blank=True)
     bio = models.TextField(default="", blank=True)

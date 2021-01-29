@@ -8,26 +8,70 @@ Search
 {% endblock page_title %}
 
 {% block search-bar %}
-<form method="get" action="{% url "rooms:search" %}">
-    {{form.as_p}}
-    <button>Search</button>
-</form>
 {% endblock search-bar %}
 
 {% block content %}
 
-<h3>Results</h3>
-{% for room in rooms %}
-    <h3>{{room.name}}</h3>
-{% endfor %}
+<div class="items-center flex-col mx-auto w-full text-center">
+    <form method="get" action="{% url "rooms:search" %}">
+        <div class="flex flex-col lg:w-2/3 md:w-3/4 sm: w-full mx-auto border shadow pb-5 px-5 items-center">
+            <div class="flex flex-wrap m-1 mt-5">
+                <div class="mr-3">{{form.city}}</div>
+                <div class="mr-3">{{form.country}}</div>
+            </div>
+            <div class="flex flex-wrap m-1">
+                <div class="mr-3">{{form.room_type}}</div>
+                <div class="mr-3">{{form.price}}</div>
+                <div class="flex flex-row items-center ml-12">
+                {% for field in form %}
+                    {% if field.name == 'superhost' or field.name == 'instant_book' %}
+                        <div class="mr-2 flex flex-row items-center w-32 h-auto">
+                            <div class="w-auto h-auto font-medium">{{field.label_tag}}</div>
+                            <div class="w-full h-auto">{{field}}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="flex flex-wrap m-1">
+                <div class="mr-3">{{form.amenities}}</div>
+                <div class="mr-3">{{form.facilities}}</div>
+            </div>
+            <div class="flex flex-wrap m-1 items-center text-center font-medium">
+                <div class="mr-3">{{form.guests.label_tag}}</div>
+                <div class="mr-3">{{form.guests}}</div>
+                <div class="mr-3">{{form.bedrooms.label_tag}}</div>
+                <div class="mr-3">{{form.bedrooms}}</div>
+                <div class="mr-3">{{form.beds.label_tag}}</div>
+                <div class="mr-3">{{form.beds}}</div>
+                <div class="mr-3">{{form.baths.label_tag}}</div>
+                <div class="mr-3">{{form.baths}}</div>
+            </div>
+                <button class="btn_link">Search</button>
+        </div>
+    </form>
+</div>
+    
 
-{% if page_obj.has_previous %}
-<a href="?page={{page_obj.previous_page_number}}{{getstr}}">Previous</a>
-{% endif %}
-Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-{% if page_obj.has_next %}
-<a href="?page={{page_obj.next_page_number}}{{getstr}}">Next</a>
-{% endif %}   
+<div class="container lg:w-3/4 md:w-10/12 sm:w-full h-full mx-auto my-10 mb-48 flex flex-col items-center">
+    <div class="mb-12 text-2xl font-medium">
+        Results
+    </div>
+    <div class="flex flex-wrap -mx-40 mb-10 w-full h-auto">
+        {% for room in rooms %}
+            {% include 'mixins/rooms/room_card.html' with room=room %}
+        {% endfor %}
+    </div>
+
+    <div class="text-gray-800 font-medium flex flex-row items-center">
+    {% if page_obj.has_previous %}
+    <a class="hover:bg-green-300 p-2 mx-5 text-white bg-green-500 rounded-full" href="?page={{page_obj.previous_page_number}}{{getstr}}">Previous</a>
+    {% endif %}
+        {{page_obj.number}} / {{page_obj.paginator.num_pages}}
+    {% if page_obj.has_next %}
+    <a class="hover:bg-green-300 p-2 mx-5 text-white bg-green-500 rounded-full" href="?page={{page_obj.next_page_number}}{{getstr}}">Next</a>
+    {% endif %} </div>
+</div>  
     
 {% endblock content %}
     

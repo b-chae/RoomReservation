@@ -47,14 +47,14 @@
                     <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="w-2/3 mx-auto">
                         {% csrf_token %}
                         {{form}}
-                        <button class="btn bg-red-400 text-white mt-10 rounded-lg">Submit Review</button>
+                        <button class="btn_link mt-10 rounded-lg">Submit Review</button>
                     </form>
                 {% else %}
                         {% if reservation.status == 'pending' %}
                             {% if reservation.room.host == user %}
-                                <a href = "{% url 'reservations:edit' reservation.pk 'confirm' %}"class="btn bg-red-400 text-white rounded-lg block px-5 mb-5">Confirm Reservation</a>
+                                <a href = "{% url 'reservations:edit' reservation.pk 'confirm' %}"class="btn_link rounded-lg block px-5 mb-5">Confirm Reservation</a>
                             {% endif %}
-                        <a href = "{% url 'reservations:edit' reservation.pk 'cancel' %}"class="btn bg-red-400 text-white rounded-lg block px-5 mb-5">Cancel Reservation</a>
+                        <a href = "{% url 'reservations:edit' reservation.pk 'cancel' %}"class="btn_link  rounded-lg block px-5 mb-5">Cancel Reservation</a>
                         {% endif %}
                     {% endif %}  
                 {% endif %}

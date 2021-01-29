@@ -13,22 +13,28 @@ class SearchForm(forms.Form):
         queryset=models.RoomType.objects.all(),
         required=False
     )
-    price = forms.IntegerField(required=False, min_value=0)
-    guests = forms.IntegerField(required=False, min_value=0, max_value=10)
-    bedrooms = forms.IntegerField(required=False, min_value=0, max_value=10)
-    beds = forms.IntegerField(required=False, min_value=0, max_value=10)
-    baths = forms.IntegerField(required=False, min_value=0, max_value=10)
-    instant_book = forms.BooleanField(required=False)
+    price = forms.IntegerField(required=False, min_value=0, widget=forms.NumberInput(
+        attrs={'placeholder': 'Minimum Price'}))
+    guests = forms.IntegerField(required=False, min_value=0,
+                                max_value=10, widget=forms.NumberInput(attrs={'class': 'h-10'}))
+    bedrooms = forms.IntegerField(
+        required=False, min_value=0, max_value=10, widget=forms.NumberInput(attrs={'class': 'h-10'}))
+    beds = forms.IntegerField(required=False, min_value=0, max_value=10,
+                              widget=forms.NumberInput(attrs={'class': 'h-10'}))
+    baths = forms.IntegerField(required=False, min_value=0, max_value=10,
+                               widget=forms.NumberInput(attrs={'class': 'h-10'}))
+    instant_book = forms.BooleanField(
+        required=False)
     superhost = forms.BooleanField(required=False)
     amenities = forms.ModelMultipleChoiceField(
         required=False,
         queryset=models.Amenity.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'h-48'}),
     )
     facilities = forms.ModelMultipleChoiceField(
         required=False,
         queryset=models.Facility.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'h-48'}),
     )
 
 

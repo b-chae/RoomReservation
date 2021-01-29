@@ -7,19 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>{% block page_title %}Home{% endblock page_title %} | ByeoriBnb</title>
+    <title>{% block page_title %}Home{% endblock page_title %} | BSaFe</title>
 </head>
 
 <body class="text-gray-800 mt-24 font-light">
     {% include 'partials/messages.html' %}
-    <header class="container max-w-full inset-0 flex items-center justify-between px-6 h-16  border-b border-gray-400 fixed bg-white">
+    <header class="container max-w-full inset-0 flex items-center justify-between px-6 h-24 border-b border-gray-400 fixed bg-white pt-8 pb-4">
     <div class="flex items-center w-2/5">
-        <a href="{% url "core:home" %}">
-            <img class="w-12 mr-4" src="{% static 'img/logo.JPG'%}"/>
+        <a class="font-semibold text-3xl mr-4 flex flex-row h-full mx-auto mb-3" href="{% url "core:home" %}">
+            <span class="text-green-900 text-opacity-80 -mr-1">B</span>
+            <span class="text-green-700 text-opacity-80 -mr-1">S</span>
+            <span class="text-green-300 text-opacity-80 -mr-1">a</span>
+            <span class="text-green-600 text-opacity-80 -mr-1">F</span>
+            <span class="text-green-800 text-opacity-80 -mr-1">e</span>
         </a>
         {% block search-bar %}
         <form method="get" action="{% url "rooms:search" %}" class="w-full">
-            <input class="search_box border text-normal font-medium placeholder-gray-600 px-3 py-2 rounded-md w-full shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="{% trans "Search By City"%} "/>
+            <input class="text-normal font-medium placeholder-gray-600 px-3 py-2 rounded-md w-full shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="{% trans "Search By City"%} "/>
         </form>
         {% endblock search-bar %}
     </div>
@@ -30,14 +34,6 @@
     {% block content %}{% endblock%}
 
     {% include 'partials/footer.html' %}
-    <script>
-        const langSelect = document.getElementById("js-lang")
-        const handleLangChange = () =>{
-            const selected = langSelect.value
-            fetch(`{% url 'users:switch-language' %}?lang=${selected}`).then(()=>window.location.reload())
-        }
-        langSelect.addEventListener("change", handleLangChange)
-    </script>
 </body>
 
 </html>
