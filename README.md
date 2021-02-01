@@ -1,6 +1,10 @@
-## 숙소 예약 웹사이트
+## 숙소 예약 웹사이트 BSaFe
 
 with Python, Django, Tailwind Css
+
+#### Click link below to check this website
+
+http://airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com/
 
 ### home
 
