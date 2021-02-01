@@ -14,15 +14,15 @@ Search
 
 <div class="items-center flex-col mx-auto w-full text-center">
     <form method="get" action="{% url "rooms:search" %}">
-        <div class="flex flex-col lg:w-2/3 md:w-3/4 sm: w-full mx-auto border shadow pb-5 px-5 items-center">
-            <div class="flex flex-wrap m-1 mt-5">
+        <div class="flex flex-col lg:w-2/3 md:w-3/4 sm:w-full mx-auto shadow pb-5 px-5 items-center justify-center">
+            <div class="flex flex-wrap m-1 mt-5 justify-center items-center">
                 <div class="mr-3">{{form.city}}</div>
                 <div class="mr-3">{{form.country}}</div>
             </div>
-            <div class="flex flex-wrap m-1">
+            <div class="flex flex-wrap m-1 justify-center">
                 <div class="mr-3">{{form.room_type}}</div>
                 <div class="mr-3">{{form.price}}</div>
-                <div class="flex flex-row items-center ml-12">
+                <div class="flex flex-row items-center ml-12 justify-center">
                 {% for field in form %}
                     {% if field.name == 'superhost' or field.name == 'instant_book' %}
                         <div class="mr-2 flex flex-row items-center w-32 h-auto">
@@ -33,19 +33,27 @@ Search
                 {% endfor %}
                 </div>
             </div>
-            <div class="flex flex-wrap m-1">
+            <div class="flex flex-wrap m-1 justify-center">
                 <div class="mr-3">{{form.amenities}}</div>
                 <div class="mr-3">{{form.facilities}}</div>
             </div>
-            <div class="flex flex-wrap m-1 items-center text-center font-medium">
-                <div class="mr-3">{{form.guests.label_tag}}</div>
-                <div class="mr-3">{{form.guests}}</div>
-                <div class="mr-3">{{form.bedrooms.label_tag}}</div>
-                <div class="mr-3">{{form.bedrooms}}</div>
-                <div class="mr-3">{{form.beds.label_tag}}</div>
-                <div class="mr-3">{{form.beds}}</div>
-                <div class="mr-3">{{form.baths.label_tag}}</div>
-                <div class="mr-3">{{form.baths}}</div>
+            <div class="flex flex-wrap m-1 items-center text-center font-medium justify-center">
+                <div class="flex flex-row items-center text-center justify-center">
+                    <div class="mr-3">{{form.guests.label_tag}}</div>
+                    <div class="mr-3">{{form.guests}}</div>
+                </div>
+                <div class="flex flex-row items-center text-center justify-center">
+                    <div class="mr-3">{{form.bedrooms.label_tag}}</div>
+                    <div class="mr-3">{{form.bedrooms}}</div>
+                </div>
+                <div class="flex flex-row items-center text-center justify-center">
+                    <div class="mr-3">{{form.beds.label_tag}}</div>
+                    <div class="mr-3">{{form.beds}}</div>
+                </div>
+                <div class="flex flex-row items-center text-center justify-center">
+                    <div class="mr-3">{{form.baths.label_tag}}</div>
+                    <div class="mr-3">{{form.baths}}</div>
+                </div>
             </div>
                 <button class="btn_link">Search</button>
         </div>
@@ -57,7 +65,7 @@ Search
     <div class="mb-12 text-2xl font-medium">
         Results
     </div>
-    <div class="flex flex-wrap -mx-40 mb-10 w-full h-auto">
+    <div class="flex flex-wrap -mx-40 mb-10 w-full h-auto justify-center">
         {% for room in rooms %}
             {% include 'mixins/rooms/room_card.html' with room=room %}
         {% endfor %}

@@ -13,11 +13,11 @@
 }
 
 .btn {
-  @apply text-center rounded-sm py-5 font-medium text-lg w-full;
+  @apply text-center rounded-sm py-5 font-medium text-lg w-full shadow;
 }
 
 .btn_link {
-  @apply text-center rounded-lg py-3 font-medium text-lg w-full text-white bg-green-600;
+  @apply text-center rounded-lg py-3 font-medium text-lg w-full shadow text-white bg-green-600;
 }
 
 form {

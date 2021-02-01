@@ -14,7 +14,7 @@ class SearchForm(forms.Form):
         required=False
     )
     price = forms.IntegerField(required=False, min_value=0, widget=forms.NumberInput(
-        attrs={'placeholder': 'Minimum Price'}))
+        attrs={'placeholder': 'Maximum Price'}))
     guests = forms.IntegerField(required=False, min_value=0,
                                 max_value=10, widget=forms.NumberInput(attrs={'class': 'h-10'}))
     bedrooms = forms.IntegerField(

@@ -22,7 +22,7 @@ class HomeView(ListView):
 
     model = models.Room
     paginate_by = 12
-    paginate_orphans = 5
+    paginate_orphans = 3
     ordering = "-created"
     page_kwarg = "page"
 
@@ -96,7 +96,7 @@ class SearchView(View):
 
                 qs = models.Room.objects.filter(
                     **filter_args).order_by("-created")
-                paginator = Paginator(qs, 10, orphans=5)
+                paginator = Paginator(qs, 12, orphans=3)
                 page = int(request.GET.get("page", 1))
                 rooms = paginator.get_page(page)
 
@@ -116,7 +116,7 @@ class SearchView(View):
         else:
             form = forms.SearchForm()
             qs = models.Room.objects.all().order_by("-created")
-            paginator = Paginator(qs, 10, orphans=5)
+            paginator = Paginator(qs, 12, orphans=3)
             page = int(request.GET.get("page", 1))
             rooms = paginator.get_page(page)
 

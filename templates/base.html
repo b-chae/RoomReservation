@@ -12,8 +12,8 @@
 
 <body class="text-gray-800 mt-24 font-light">
     {% include 'partials/messages.html' %}
-    <header class="container max-w-full inset-0 flex items-center justify-between px-6 h-24 border-b border-gray-400 fixed bg-white pt-8 pb-4">
-    <div class="flex items-center w-2/5">
+    <header class="container max-w-full inset-0 flex items-center justify-between px-6 h-20 shadow fixed mb-5 bg-white pt-8 pb-2">
+    <div class="flex items-center w-1/5">
         <a class="font-semibold text-3xl mr-4 flex flex-row h-full mx-auto mb-3" href="{% url "core:home" %}">
             <span class="text-green-900 text-opacity-80 -mr-1">B</span>
             <span class="text-green-700 text-opacity-80 -mr-1">S</span>
@@ -22,9 +22,9 @@
             <span class="text-green-800 text-opacity-80 -mr-1">e</span>
         </a>
         {% block search-bar %}
-        <form method="get" action="{% url "rooms:search" %}" class="w-full">
+        <!-- <form method="get" action="{% url "rooms:search" %}" class="w-full">
             <input class="text-normal font-medium placeholder-gray-600 px-3 py-2 rounded-md w-full shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="{% trans "Search By City"%} "/>
-        </form>
+        </form> -->
         {% endblock search-bar %}
     </div>
     <div class="h-full">

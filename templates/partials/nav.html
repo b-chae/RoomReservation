@@ -1,4 +1,10 @@
     <ul class="flex items-center text-sm font-medium h-full">
+        <li class="nav_link">
+            <a class="flex justify-between items-center" href='{% url "rooms:search" %}'>
+            <i class="fas fa-globe-americas mr-2 text-indigo-900"></i>
+            <span class="text-indigo-800 font-bold">Explore</span>
+            </a>
+        </li>
         {% if user.is_authenticated %}
             <li class="nav_link">
                 <a href='{% url "users:switch-hosting" %}'>
