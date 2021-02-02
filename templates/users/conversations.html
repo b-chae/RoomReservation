@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+    Reservation {{reservation.check_in}}
+{% endblock page_title %}
+
+
+{% block search-bar %}  
+{% endblock search-bar %}
+
+
+{% block content %}
+
+<div class='lg:w-1/2 md:w-2/3 sm:w-full m-10 flex flex-col mx-auto justify-center text-center shadow'>
+    <div class="font-medium text-2xl my-10 p-5 w-1/2 mx-auto rounded-full bg-blue-400 text-white">
+        My Conversations
+    </div>
+        
+    {% for conversation in conversations.all %}
+        <div class="m-3 w-auto shadow flex flex-col items-center text-center">
+            <div class="flex-row flex justify-left w-full mx-auto items-center">
+                {% for parti in conversation.participants.all %}
+                <a href="{% url 'users:profile' parti.pk %}" class="m-1">
+                    {% include 'mixins/user_avatar.html' with user=parti h_and_w='h-12 w-12' %}
+                </a>
+                {% endfor %}
+                {% for parti in conversation.participants.all %}
+                <div class="font-medium text-gray-600">
+                    <span class="mr-3">{{parti.first_name}}</span>
+                </div>
+                {% endfor %}
+            <div class="font-light text-xs text-gray-400">
+                <span>{{conversation.updated}}</span>
+            </div>
+            </div>
+            <a class="p-5 mx-5 bg-gray-200 hover:bg-gray-500 w-full text-gray-800 font-medium text-left text-lg" href='{% url "conversations:detail" conversation.pk %}'> 
+                {{conversation.recent_message}}
+            </a>
+        </div>
+    {% endfor %}
+</div>
+    
+{% endblock content%}

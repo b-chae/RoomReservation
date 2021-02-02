@@ -23,6 +23,9 @@ class Conversation(core_models.TimeStampedModel):
 
     count_participants.short_description = "Number of Participants"
 
+    def recent_message(self):
+        return self.messages.order_by('-created')[0]
+
 
 class Message(core_models.TimeStampedModel):
 

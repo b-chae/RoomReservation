@@ -20,6 +20,9 @@
     {% for r in reservations %}
         <div class="mb-3 w-full border-b">
             <a class="{% if r.guest.pk == user.pk %} text-gray-900 {% else %} text-pink-500 {% endif %} hover:underline hover:text-gray-400" href='{% url "reservations:detail" r.pk %}'> ({{r.status}}) {{r.room.name}} / {{r.check_in}} </a>
+            {% if r.status == 'canceled' and r.room.host == user%}
+                <a href="{% url 'reservations:delete' r.pk %}" class="ml-10">❎</a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

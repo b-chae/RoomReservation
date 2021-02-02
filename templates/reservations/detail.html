@@ -42,7 +42,7 @@
     
             <div class="pb-5 px-5 flex flex-col">
             {% if reservation.status != 'canceled' %}
-                {% if reservation.status == 'confirmed' and reservation.is_finished %}
+                {% if reservation.status == 'confirmed' and reservation.is_finished and reservation.room.host != user%}
                 <span class="font-medium text-2xl text-center w-full block mb-5">Write your review</span>
                     <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="w-2/3 mx-auto">
                         {% csrf_token %}

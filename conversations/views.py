@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.http import Http404
 from django.shortcuts import redirect, reverse, render
 from django.views.generic import View
@@ -29,6 +30,12 @@ class ConversationDetailView(View):
         if not conversation:
             raise Http404()
 
+        if not self.request.user.is_authenticated:
+            return render(redirect("users:login"))
+
+        if self.request.user not in conversation.participants.all():
+            raise Http404()
+
         form = forms.AddCommentForm
         return render(self.request, "conversations/conversation_detail.html",
                       {"conversation": conversation,
@@ -44,4 +51,5 @@ class ConversationDetailView(View):
                 user=self.request.user,
                 conversation=conversation,
             )
+        conversation.save()
         return redirect(reverse("conversations:detail", kwargs={"pk": pk}))

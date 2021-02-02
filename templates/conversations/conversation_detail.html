@@ -34,9 +34,12 @@
         <div class="flex flex-col w-2/3 border p-4">
             
             {% for message in conversation.messages.all %}
-            <div class="mb-10 flex {% if message.user.pk == user.pk %} self-end {% else %} justify-left {% endif %} items-center">
-                <div class="text-sm font-medium text-gray-600 m-3">{{message.user.first_name}}</div>
-                <div class="mt-px {% if message.user.pk == user.pk %} bg-blue-300 {% else %} bg-gray-300 {% endif %} p-5 w-auto h-auto rounded-xl">{{message.message}}</div>
+            <div class="mb-10 flex flex-col {% if message.user.pk == user.pk %} self-end {% else %} self-start {% endif %} items-center">
+                <div class="flex flex-wrap items-center text-center w-auto h-auto">
+                    <div class="text-sm font-medium text-gray-600 mx-3 w-auto">{{message.user.first_name}}</div>
+                    <div class="text-xs font-light text-gray-500 mx-1 w-auto">{{message.created}}</div>
+                </div>
+                <div class="{% if message.user.pk == user.pk %} bg-blue-300 {% else %} bg-gray-300 {% endif %} p-4 w-auto h-auto rounded-xl">{{message.message}}</div>
             </div>
             {% endfor %}
                 

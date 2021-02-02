@@ -5,7 +5,7 @@ from django.utils import translation
 from django.http import HttpResponse
 from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect, reverse, render
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
@@ -79,6 +79,7 @@ def complete_verification(request, key):
 
 def github_login(request):
     client_id = os.environ.get("GH_ID")
+    print(client_id)
     redirect_url = "http://airbnb-clone.eba-2kktntyc.ap-northeast-2.elasticbeanstalk.com/users/login/github/callback"
     return redirect(
         "https://github.com/login/oauth/authorize"
@@ -318,3 +319,10 @@ def switch_lang(request):
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang)
 
     return response
+
+
+@login_required
+def conversations(request):
+    user = models.User.objects.get(pk=request.user.pk)
+    conversations = user.conversations.order_by("-updated")
+    return render(request, "users/conversations.html", {"conversations": conversations})

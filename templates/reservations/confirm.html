@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+    Reservation {{reservation.check_in}}
+{% endblock page_title %}
+
+
+{% block search-bar %}  
+{% endblock search-bar %}
+
+
+{% block content %}
+    <div class="container my-10 mx-auto flex flex-col">
+
+        <div class="border-t border-l border-r bg-cover bg-center h-56 rounded-t-lg" style="background-image: url({{room.first_photo}});">
+        </div>
+        
+        <div class="flex flex-col items-start border-l border-r border-t border-b">
+            <div class="font-medium border-b py-8 px-5 w-full">
+                {{year}}/{{month}}/{{day}}
+            </div>
+    
+            <span class="text-xl border-b mt-2 p-5 w-full">
+                {{room.name}}
+            </span>
+    
+            <div class="w-full">
+                <div class="flex my-10 p-5 border-b w-full">
+                    <div class="flex flex-col items-center">
+                        <a href="{{room.host.get_absolute_url}}">
+                        {% include 'mixins/user_avatar.html' with user=room.host %}</a>
+                        <span class="text-gray-400 mt-2">{{room.host.first_name}}</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="pb-5 px-5 flex flex-col justify-center w-full mx-auto">
+                <span class="font-medium text-2xl text-center w-full block mb-5">Are you sure to make a new reservation?</span>
+                <a class="btn_link mt-2 rounded-lg w-1/3 mx-auto" href="{% url 'reservations:create' room.pk year month day %}">Yes</a>
+                <a class="btn_link mt-2 rounded-lg w-1/3 mx-auto" href="{% url 'rooms:detail' room.pk %}">Back to Previous Page</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+    
